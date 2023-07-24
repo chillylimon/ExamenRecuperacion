@@ -3,6 +3,7 @@
 
 #define MAX_CARROS 100
 
+// Definición de la estructura Carro
 struct Carro {
     char color[20];
     char marca[30];
@@ -11,17 +12,22 @@ struct Carro {
     char nombreDueno[50];
 };
 
+// Declaración del arreglo de carros y variable para contar la cantidad de carros en el inventario
 struct Carro inventario[MAX_CARROS];
 int numCarros = 0;
 
+// Función para agregar un nuevo carro al inventario
 void agregarCarro() {
+    // Verificar si el inventario está lleno
     if (numCarros >= MAX_CARROS) {
-        printf("El inventario está lleno. No se puede agregar mas carros.\n");
+        printf("El inventario está lleno. No se puede agregar más carros.\n");
         return;
     }
 
+    // Crear una nueva estructura Carro para almacenar los datos del nuevo carro
     struct Carro nuevoCarro;
 
+    // Solicitar al usuario los datos del nuevo carro y almacenarlos en la estructura
     printf("Ingrese el color del carro: ");
     scanf("%s", nuevoCarro.color);
 
@@ -31,34 +37,38 @@ void agregarCarro() {
     printf("Ingrese la placa del carro: ");
     scanf("%s", nuevoCarro.placa);
 
-    printf("Ingrese la cedula del dueno: ");
+    printf("Ingrese la cedula del dueño: ");
     scanf("%s", nuevoCarro.cedulaDueno);
 
-    printf("Ingrese el nombre del dueno: ");
+    printf("Ingrese el nombre del dueño: ");
     getchar(); // Limpiar el buffer del salto de línea
     fgets(nuevoCarro.nombreDueno, sizeof(nuevoCarro.nombreDueno), stdin);
 
+    // Agregar el nuevo carro al inventario y aumentar la cantidad de carros
     inventario[numCarros] = nuevoCarro;
     numCarros++;
 
     printf("Carro agregado al inventario con éxito.\n");
 }
 
+// Función para buscar un carro por placa en el inventario
 void buscarCarroPorPlaca() {
     char placaBuscada[15];
     printf("Ingrese la placa del carro a buscar: ");
     scanf("%s", placaBuscada);
 
+    // Bandera para indicar si se encontró el carro con la placa buscada
     int encontrado = 0;
     for (int i = 0; i < numCarros; i++) {
         if (strcmp(inventario[i].placa, placaBuscada) == 0) {
+            // Mostrar los datos del carro encontrado
             printf("Carro encontrado:\n");
             printf("Color: %s\n", inventario[i].color);
             printf("Marca: %s\n", inventario[i].marca);
             printf("Placa: %s\n", inventario[i].placa);
-            printf("Cedula del dueno: %s\n", inventario[i].cedulaDueno);
-            printf("Nombre del dueno: %s\n", inventario[i].nombreDueno);
-            encontrado = 1;
+            printf("Cedula del dueño: %s\n", inventario[i].cedulaDueno);
+            printf("Nombre del dueño: %s\n", inventario[i].nombreDueno);
+            encontrado = 1; // Cambiar la bandera a 1 para indicar que se encontró el carro
             break;
         }
     }
@@ -68,21 +78,24 @@ void buscarCarroPorPlaca() {
     }
 }
 
+// Función para buscar un carro por cédula del dueño en el inventario
 void buscarCarroPorCedula() {
     char cedulaBuscada[20];
-    printf("Ingrese la cédula del dueno del carro a buscar: ");
+    printf("Ingrese la cédula del dueño del carro a buscar: ");
     scanf("%s", cedulaBuscada);
 
+    // Bandera para indicar si se encontró el carro con la cédula buscada
     int encontrado = 0;
     for (int i = 0; i < numCarros; i++) {
         if (strcmp(inventario[i].cedulaDueno, cedulaBuscada) == 0) {
+            // Mostrar los datos del carro encontrado
             printf("Carro encontrado:\n");
             printf("Color: %s\n", inventario[i].color);
             printf("Marca: %s\n", inventario[i].marca);
             printf("Placa: %s\n", inventario[i].placa);
             printf("Cédula del dueño: %s\n", inventario[i].cedulaDueno);
             printf("Nombre del dueño: %s\n", inventario[i].nombreDueno);
-            encontrado = 1;
+            encontrado = 1; // Cambiar la bandera a 1 para indicar que se encontró el carro
             break;
         }
     }
@@ -92,15 +105,18 @@ void buscarCarroPorCedula() {
     }
 }
 
+// Función para modificar un carro en el inventario
 void modificarCarro() {
     char placaModificar[15];
     printf("Ingrese la placa del carro a modificar: ");
     scanf("%s", placaModificar);
 
+    // Bandera para indicar si se encontró el carro a modificar
     int encontrado = 0;
     for (int i = 0; i < numCarros; i++) {
         if (strcmp(inventario[i].placa, placaModificar) == 0) {
             printf("Ingrese los nuevos datos del carro:\n");
+            // Solicitar al usuario los nuevos datos del carro y actualizarlos en la estructura
             printf("Color: ");
             scanf("%s", inventario[i].color);
 
@@ -118,7 +134,7 @@ void modificarCarro() {
             fgets(inventario[i].nombreDueno, sizeof(inventario[i].nombreDueno), stdin);
 
             printf("Carro modificado con éxito.\n");
-            encontrado = 1;
+            encontrado = 1; // Cambiar la bandera a 1 para indicar que se encontró el carro
             break;
         }
     }
@@ -128,20 +144,21 @@ void modificarCarro() {
     }
 }
 
+// Función para borrar un carro del inventario
 void borrarCarro() {
     char placaBorrar[15];
     printf("Ingrese la placa del carro a borrar: ");
     scanf("%s", placaBorrar);
 
+    // Bandera para indicar si se encontró el carro a borrar
     int encontrado = 0;
     for (int i = 0; i < numCarros; i++) {
         if (strcmp(inventario[i].placa, placaBorrar) == 0) {
-            // Para eliminar un carro, podemos simplemente mover el último carro del inventario
-            // a la posición del carro que queremos borrar y decrementar el contador de carros.
+            // Mover el último carro del inventario a la posición del carro a borrar
             inventario[i] = inventario[numCarros - 1];
-            numCarros--;
-            printf("Carro borrado del inventario con exito.\n");
-            encontrado = 1;
+            numCarros--; // Decrementar la cantidad de carros en el inventario
+            printf("Carro borrado del inventario con éxito.\n");
+            encontrado = 1; // Cambiar la bandera a 1 para indicar que se encontró el carro
             break;
         }
     }
@@ -151,6 +168,7 @@ void borrarCarro() {
     }
 }
 
+// Función para guardar los datos del inventario en un archivo
 void guardarEnArchivo() {
     FILE *archivo = fopen("inventario.txt", "w");
     if (archivo == NULL) {
@@ -158,22 +176,21 @@ void guardarEnArchivo() {
         return;
     }
 
+    // Escribir los datos del inventario en el archivo
     fprintf(archivo, "--- Inventario de Carros ---\n");
-
     for (int i = 0; i < numCarros; i++) {
         fprintf(archivo, "Carro %d:\n", i + 1);
         fprintf(archivo, "Color: %s\n", inventario[i].color);
         fprintf(archivo, "Marca: %s\n", inventario[i].marca);
         fprintf(archivo, "Placa: %s\n", inventario[i].placa);
-        fprintf(archivo, "Cédula del dueno: %s\n", inventario[i].cedulaDueno);
-        fprintf(archivo, "Nombre del dueno: %s\n", inventario[i].nombreDueno);
+        fprintf(archivo, "Cédula del dueño: %s\n", inventario[i].cedulaDueno);
+        fprintf(archivo, "Nombre del dueño: %s\n", inventario[i].nombreDueno);
         fprintf(archivo, "\n");
     }
 
     fclose(archivo);
-    printf("Datos guardados en el archivo 'inventario.txt' con exito.\n");
+    printf("Datos guardados en el archivo 'inventario.txt' con éxito.\n");
 }
-
 
 int main() {
     int opcion;
@@ -206,11 +223,9 @@ int main() {
             case 5:
                 borrarCarro();
                 break;
-            
             case 6:
                 guardarEnArchivo();
                 break;
-
             case 7:
                 printf("Saliendo del programa.\n");
                 break;
@@ -218,7 +233,7 @@ int main() {
                 printf("Opcion invalida. Intente nuevamente.\n");
                 break;
         }
-    } while (opcion != 6);
+    } while (opcion != 7);
 
     return 0;
 }
