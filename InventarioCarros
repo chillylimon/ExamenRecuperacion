@@ -14,6 +14,85 @@ struct Carro {
 struct Carro inventario[MAX_CARROS];
 int numCarros = 0;
 
+void agregarCarro() {
+    if (numCarros >= MAX_CARROS) {
+        printf("El inventario está lleno. No se puede agregar mas carros.\n");
+        return;
+    }
+
+    struct Carro nuevoCarro;
+
+    printf("Ingrese el color del carro: ");
+    scanf("%s", nuevoCarro.color);
+
+    printf("Ingrese la marca del carro: ");
+    scanf("%s", nuevoCarro.marca);
+
+    printf("Ingrese la placa del carro: ");
+    scanf("%s", nuevoCarro.placa);
+
+    printf("Ingrese la cedula del dueno: ");
+    scanf("%s", nuevoCarro.cedulaDueno);
+
+    printf("Ingrese el nombre del dueno: ");
+    getchar(); // Limpiar el buffer del salto de línea
+    fgets(nuevoCarro.nombreDueno, sizeof(nuevoCarro.nombreDueno), stdin);
+
+    inventario[numCarros] = nuevoCarro;
+    numCarros++;
+
+    printf("Carro agregado al inventario con éxito.\n");
+}
+
+void buscarCarroPorPlaca() {
+    char placaBuscada[15];
+    printf("Ingrese la placa del carro a buscar: ");
+    scanf("%s", placaBuscada);
+
+    int encontrado = 0;
+    for (int i = 0; i < numCarros; i++) {
+        if (strcmp(inventario[i].placa, placaBuscada) == 0) {
+            printf("Carro encontrado:\n");
+            printf("Color: %s\n", inventario[i].color);
+            printf("Marca: %s\n", inventario[i].marca);
+            printf("Placa: %s\n", inventario[i].placa);
+            printf("Cedula del dueno: %s\n", inventario[i].cedulaDueno);
+            printf("Nombre del dueno: %s\n", inventario[i].nombreDueno);
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("Carro con placa %s no encontrado en el inventario.\n", placaBuscada);
+    }
+}
+
+void buscarCarroPorCedula() {
+    char cedulaBuscada[20];
+    printf("Ingrese la cédula del dueno del carro a buscar: ");
+    scanf("%s", cedulaBuscada);
+
+    int encontrado = 0;
+    for (int i = 0; i < numCarros; i++) {
+        if (strcmp(inventario[i].cedulaDueno, cedulaBuscada) == 0) {
+            printf("Carro encontrado:\n");
+            printf("Color: %s\n", inventario[i].color);
+            printf("Marca: %s\n", inventario[i].marca);
+            printf("Placa: %s\n", inventario[i].placa);
+            printf("Cédula del dueño: %s\n", inventario[i].cedulaDueno);
+            printf("Nombre del dueño: %s\n", inventario[i].nombreDueno);
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("Carro con cédula %s no encontrado en el inventario.\n", cedulaBuscada);
+    }
+}
+
+
 int main() {
     int opcion;
 
