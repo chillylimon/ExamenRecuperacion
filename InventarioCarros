@@ -92,6 +92,65 @@ void buscarCarroPorCedula() {
     }
 }
 
+void modificarCarro() {
+    char placaModificar[15];
+    printf("Ingrese la placa del carro a modificar: ");
+    scanf("%s", placaModificar);
+
+    int encontrado = 0;
+    for (int i = 0; i < numCarros; i++) {
+        if (strcmp(inventario[i].placa, placaModificar) == 0) {
+            printf("Ingrese los nuevos datos del carro:\n");
+            printf("Color: ");
+            scanf("%s", inventario[i].color);
+
+            printf("Marca: ");
+            scanf("%s", inventario[i].marca);
+
+            printf("Placa: ");
+            scanf("%s", inventario[i].placa);
+
+            printf("Cédula del dueño: ");
+            scanf("%s", inventario[i].cedulaDueno);
+
+            printf("Nombre del dueño: ");
+            getchar(); // Limpiar el buffer del salto de línea
+            fgets(inventario[i].nombreDueno, sizeof(inventario[i].nombreDueno), stdin);
+
+            printf("Carro modificado con éxito.\n");
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("Carro con placa %s no encontrado en el inventario.\n", placaModificar);
+    }
+}
+
+void borrarCarro() {
+    char placaBorrar[15];
+    printf("Ingrese la placa del carro a borrar: ");
+    scanf("%s", placaBorrar);
+
+    int encontrado = 0;
+    for (int i = 0; i < numCarros; i++) {
+        if (strcmp(inventario[i].placa, placaBorrar) == 0) {
+            // Para eliminar un carro, podemos simplemente mover el último carro del inventario
+            // a la posición del carro que queremos borrar y decrementar el contador de carros.
+            inventario[i] = inventario[numCarros - 1];
+            numCarros--;
+            printf("Carro borrado del inventario con exito.\n");
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("Carro con placa %s no encontrado en el inventario.\n", placaBorrar);
+    }
+}
+
 
 int main() {
     int opcion;
