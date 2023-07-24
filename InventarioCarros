@@ -151,6 +151,29 @@ void borrarCarro() {
     }
 }
 
+void guardarEnArchivo() {
+    FILE *archivo = fopen("inventario.txt", "w");
+    if (archivo == NULL) {
+        printf("Error al abrir el archivo.\n");
+        return;
+    }
+
+    fprintf(archivo, "--- Inventario de Carros ---\n");
+
+    for (int i = 0; i < numCarros; i++) {
+        fprintf(archivo, "Carro %d:\n", i + 1);
+        fprintf(archivo, "Color: %s\n", inventario[i].color);
+        fprintf(archivo, "Marca: %s\n", inventario[i].marca);
+        fprintf(archivo, "Placa: %s\n", inventario[i].placa);
+        fprintf(archivo, "Cédula del dueno: %s\n", inventario[i].cedulaDueno);
+        fprintf(archivo, "Nombre del dueno: %s\n", inventario[i].nombreDueno);
+        fprintf(archivo, "\n");
+    }
+
+    fclose(archivo);
+    printf("Datos guardados en el archivo 'inventario.txt' con exito.\n");
+}
+
 
 int main() {
     int opcion;
